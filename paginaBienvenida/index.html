@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="img/goku.png">
+  <title>Goku</title>
+</head>
+<body class="bg-[url(img/goku.png)] text-center p-10">
+
+  <h1 class="text-4xl font-bold text-black-800">Tailwind funcionando localmente</h1>
+  <br>
+
+  <div class="flex justify-center font-bold text-black-800">
+    <h1 class="italic md:not-italic text-5xl">Consumo de Api</h1>
+  </div>
+
+  <br>
+
+  <div class="bg-white p-6 rounded-lg shadow-md text-center max-w-sm mx-auto">
+    <button onclick="cargarimagen(true)" class="bg-white border-4 border-double py-6 px-20 hover:bg-stone-950 hover:text-stone-50 cursor-pointer rounded mb-2 w-full">Cargar con éxito</button>
+
+    <button onclick="cargarimagen(false)" class="bg-black border-4 border-double text-stone-50 py-6 px-20 hover:bg-stone-50 hover:text-stone-950 cursor-pointer rounded mb-2 w-full">Cargar con errores</button>
+
+    <div id="mensaje" class="my-4 italic">Esperando</div>
+
+    <div id="cargando" class="hidden">
+      <div class="w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin mx-auto"></div>
+      <img id="imagen" class="hidden max-w-full mt-4 mx-auto">
+      <div id="error" class="hidden text-red-500">⚰ Error ⚰</div>
+    </div>
+  </div>
+
+  <script>
+    function cargarimagen(exito) {
+      document.getElementById('mensaje').textContent = "Cargando...";
+      document.getElementById('cargando').classList.remove('hidden');
+      document.getElementById('imagen').classList.add('hidden');
+      document.getElementById('error').classList.add('hidden');
+
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (exito) {
+            resolve("img/calvo.png");
+          } else {
+            reject("Error al cargar la imagen");
+          }
+        }, 2000);
+      })
+      .then(url => {
+        document.getElementById("mensaje").textContent = " Imagen cargada ";
+        const img = document.getElementById("imagen");
+        img.src = url;
+        img.classList.remove("hidden");
+        document.getElementById("error").classList.add("hidden");
+      })
+      .catch(mensajeError => {
+        document.getElementById("mensaje").textContent = "Error al cargar";
+        document.getElementById("error").classList.remove("hidden");
+        alert(mensajeError);
+      });
+    }
+  </script>
+
+</body>
+</html>
